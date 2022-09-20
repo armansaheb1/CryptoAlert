@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flask Auth Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="preconnect" href="//fdn.fontcdn.ir">
+    <link rel="preconnect" href="//v1.fontapi.ir">
+    <link href="https://v1.fontapi.ir/css/Yekan" rel="stylesheet">
+</head>
+<style>
+a,h1,h2,h3,h4,h5,h6,button,span{
+    font-family: Yekan, sans-serif;
+}
+</style>
+
+<body>
+    <section class="hero is-primary is-fullheight">
+
+        <div class="hero-head" style="float: left;">
+            <nav class="navbar">
+                <div class="container">
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        <div class="navbar-end" style="direction: rtl;">
+                            <a href="{{ url_for('main.index') }}" class="navbar-item">
+                                خانه
+                            </a>
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('main.profile') }}" class="navbar-item">
+                                پروفایل
+                            </a>
+                            {% endif %}
+                            {% if not current_user.is_authenticated %}
+                            <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                                ورود
+                            </a>
+                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                                ثبت نام
+                            </a>
+                            {% endif %}
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('main.price_alert') }}" class="navbar-item">
+                                آلرت قیمت
+                            </a>
+                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                                خروج
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="hero-body" style="margin-top: -250px;">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

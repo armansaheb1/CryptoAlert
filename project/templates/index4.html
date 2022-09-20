@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>فیلتر اندیکاتورها</title>
+    <link rel="icon" href="https://image.shutterstock.com/image-illustration/golden-bitcoin-digital-currency-on-600w-1893271597.jpg" type="image/icon type">
+    
+</head>
+<body>
+  
+
+
+<form  action="/macd">
+  <h1 id="fo2">MACDفیلتر اندیکاتور </h1>
+  <h2 id="fo2">تقاطع به سمت بالا خط سیگنال</h2>
+  <select name="indicators" id="indicator">
+    <option value="macd5"> تایم فریم 5 دقیقه </option>
+    <option value="macd15"> تایم فریم 15 دقیقه </option>
+    <option value="macd30"> تایم فریم 30 دقیقه</option>
+    <option value="macd1"> تایم فریم 1 ساعته</option>
+    <option value="macd4"> تایم فریم 4 ساعته</option>
+    <option value="macdd"> تایم فریم روزانه</option>
+  </select>
+  <br><br>
+  <input  id=sub type="submit" value="MACD ثبت فیلتر "  href="/macd" onclick="loading()">
+</form>
+<br />
+
+<hr/>
+
+
+  <form  action="/rsi">
+    <h1 id="fo2">RSIفیلتر اندیکاتور </h1>
+    <h2 id="fo2">بالاتر از 70</h2>
+    <select name="rsi" id="indicator">
+      <option value="rsi5"> تایم فریم 5 دقیقه </option>
+      <option value="rsi15"> تایم فریم 15 دقیقه </option>
+      <option value="rsi30"> تایم فریم 30 دقیقه</option>
+      <option value="rsi1"> تایم فریم 1 ساعته</option>
+      <option value="rsi4"> تایم فریم 4 ساعته</option>
+      <option value="rsid"> تایم فریم روزانه</option>
+    </select>
+    <br><br>
+    <input  id=sub type="submit" value="RSIثبت فیلتر "  href="/rsi" onclick="loading()">
+  </form>
+
+  <br />
+   
+  <hr/>
+
+
+  <form  action="/rsi2">
+    <h1 id="fo2">RSIفیلتر اندیکاتور </h1>
+    <h2 id="fo2">  کمتر از 30</h2>
+    <select name="rsi2" id="indicator">
+      <option value="rsi5"> تایم فریم 5 دقیقه </option>
+      <option value="rsi15"> تایم فریم 15 دقیقه </option>
+      <option value="rsi30"> تایم فریم 30 دقیقه</option>
+      <option value="rsi1"> تایم فریم 1 ساعته</option>
+      <option value="rsi4"> تایم فریم 4 ساعته</option>
+      <option value="rsid"> تایم فریم روزانه</option>
+    </select>
+    <br><br>
+    <input  id=sub type="submit" value="RSIثبت فیلتر "  href="/rsi2" onclick="loading()">
+  </form>
+
+  <br />
+
+
+
+<hr/>
+  <form  action="/ichimokue">
+    <h1 id="fo2">فیلتر ایچیموکو</h1>
+    
+    <select  name="ichimokue" id="indicator">
+      
+      <option value="ichimokue0" selected disabled>نوع فیلتر را انتخاب کنید</option>
+      <option value="ichimokue"> تقاطع تکانسن و کیجونسن به سمت بالا</option>
+      <option value="ichimokue2"> تقاطع نزولی تکانسن و کیجونس </option>
+      <option value="ichimokue3"> را به سمت بالا قطع کند B سنکو A سنکو</option>
+      <option value="ichimokue4"> را به سمت پایین قطع کند B سنکو A سنکو</option>
+      <option value="ichimokue6"> قیمت بالای ابر ایچیموکو</option>
+    </select>
+
+    
+<br><br>
+    <select name="ichimokuen" id="indicator">
+      
+      <option value="ichimokue0" selected disabled>تایم فریم را انتخاب کنید</option>
+      <option value="ichimokue5"> تایم فریم 5 دقیقه </option>
+      <option value="ichimokue15"> تایم فریم 15 دقیقه </option>
+      <option value="ichimokue30"> تایم فریم 30 دقیقه</option>
+      <option value="ichimokue1"> تایم فریم 1 ساعته</option>
+      <option value="ichimokue4"> تایم فریم 4 ساعته</option>
+      <option value="ichimokued"> تایم فریم روزانه</option>
+    </select>
+<br />
+    <br><br>
+    <input  id=sub type="submit" value="ثبت فیلترایچیموکو"  href="/ichimokue" onclick="loading()">
+  </form>
+
+  <br />
+
+  <hr/>
+
+
+  <form  action="/bolinger">
+    <h1 id="fo2">فیلتر بولینگرباند</h1>
+    
+    <select  name="bolinger" id="indicator">
+      
+      <option value="bb0" selected disabled>نوع فیلتر را انتخاب کنید</option>
+      <option value="bbup">سکه های موجود در باند بالایی بولینگرباند </option>
+      <option value="bbdown"> سکه های موجود در باند پایینی بولینگرباند </option>
+     
+    </select>
+
+    
+<br><br>
+    <select name="bolinger2" id="indicator">
+      
+      <option value="bb20" selected disabled>تایم فریم را انتخاب کنید</option>
+      <option value="bb5"> تایم فریم 5 دقیقه </option>
+      <option value="bb15"> تایم فریم 15 دقیقه </option>
+      <option value="bb30"> تایم فریم 30 دقیقه</option>
+      <option value="bb1"> تایم فریم 1 ساعته</option>
+      <option value="bb4"> تایم فریم 4 ساعته</option>
+      <option value="bbd"> تایم فریم روزانه</option>
+    </select>
+<br />
+    <br><br>
+    <input  id=sub type="submit" value="ثبت فیلترایچیموکو"  href="/bolinger" onclick="loading()">
+  </form>
+
+<hr/>
+
+<form  action="/cci">
+  <h1 id="fo2">cciفیلتراندیکاتور</h1>
+  
+  <select  name="cci1" id="indicator">
+    
+    <option value="cci0" selected disabled>نوع فیلتر را انتخاب کنید</option>
+    <option value="cci100">  بالاتر از 100 CCI</option>
+    <option value="cci-100">  کم تر از 100 CCI</option>
+   
+  </select>
+
+  
+<br><br>
+  <select name="cci2" id="indicator">
+    
+    <option value="cci0" selected disabled>تایم فریم را انتخاب کنید</option>
+    <option value="cci5"> تایم فریم 5 دقیقه </option>
+    <option value="cci15"> تایم فریم 15 دقیقه </option>
+    <option value="cci30"> تایم فریم 30 دقیقه</option>
+    <option value="cci1"> تایم فریم 1 ساعته</option>
+    <option value="cci4"> تایم فریم 4 ساعته</option>
+    <option value="ccid"> تایم فریم روزانه</option>
+  </select>
+<br />
+  <br><br>
+  <input  id=sub type="submit" value="CCI ثبت فیلتر "  href="/cci" onclick="loading()">
+</form>
+
+<hr/>
+
+
+
+<form  action="/adx">
+  <h1 id="fo2">adx اندیکاتور </h1>
+  <h2 id="fo2">DI- و DI+تقاطع به سمت بالا خط </h2>
+  <select name="adx" id="indicator">
+    <option value="adx0" selected disabled>تایم فریم را انتخاب کنید</option>
+    <option value="adx5"> تایم فریم 5 دقیقه </option>
+    <option value="adx15"> تایم فریم 15 دقیقه </option>
+    <option value="adx30"> تایم فریم 30 دقیقه</option>
+    <option value="adx1"> تایم فریم 1 ساعته</option>
+    <option value="adx4"> تایم فریم 4 ساعته</option>
+    <option value="adxd"> تایم فریم روزانه</option>
+  </select>
+  <br><br>
+  <input  id=sub type="submit" value="ADXثبت فیلتر "  href="/adx" onclick="loading()">
+</form>
+
+<hr/>
+  
+
+</body>
+</html>
+

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript">// <![CDATA[
+    
+// ]]></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+<script>
+$(document).ready(function(){
+
+  $("button").click(function(){
+
+     $("#loading").show();
+     
+    $.ajax({url: "../static/a.txt",
+   
+     success: function(result){
+      
+      $("#loading").hide();
+     
+      
+      $("#div4").html(result);
+      
+         }});
+     });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+    <div id="loading">
+        <!-- <img src="https://icon-library.com/images/loading-please-wait-icon/loading-please-wait-icon-1.jpg" alt="Girl in a jacket" width="800" height="500"> -->
+      
+      </div>
+     
+
+<div id="div3">
+<!-- <div id="div1"> -->
+  <!-- <form id="button"  method="get">
+  <label for="indicator">فیلتر MACD:</label>
+  <select name="indicators" id="indicator">
+    <option value="macd"> اندیکاتور MACD</option>
+    <option value="RSI"> RSI اندیکاتور</option>
+  </select> 
+  
+ 
+</form>  -->
+<button id="button"> فیلتر مکدی یک ساعته </button> 
+
+
+<!-- <input type="submit" value="ثبت فیلتر" form="form1"> -->
+
+
+
+<!-- <h1>{{ x }}</h1> -->
+
+<!-- </div> -->
+</div>
+<div>
+<button id="button2"> فیلتر مکدی دو ساعته </button> 
+<script>
+  $(document).ready(function(){
+  
+    $("button2").click(function(){
+  
+       $("#loading").show();
+       
+      $.ajax({url: "../static/a2.txt",
+     
+       success: function(result){
+        
+        $("#loading").hide();
+       
+        
+        $("#div5").html(result);
+        
+           }});
+       });
+  });
+  </script>
+
+
+
+
+</div>
+
+<div id="div4"></div>
+<div id="div5"></div>
+<hr>
+
+
+<h1 >اخبار سکه</h1>
+  
+   <!-- id=sub type="submit" value="ثبت فیلتر "   onclick="loading()"  -->
+
+
+
+
+
+
+
+
+   
+
+</body>
+</html>

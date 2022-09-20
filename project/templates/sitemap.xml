@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>http://www.indbit.ir/</loc>
+  <lastmod>2022-09-12T15:23:23+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://www.indbit.ir/static/form.html</loc>
+  <lastmod>2022-09-08T10:47:26+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.indbit.ir/static/index5.html</loc>
+  <lastmod>2022-09-12T12:00:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.indbit.ir/static/index1.html</loc>
+  <lastmod>2022-09-12T12:35:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.indbit.ir/static/index6.html</loc>
+  <lastmod>2022-09-12T12:13:40+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.indbit.ir/static/index7.html</loc>
+  <lastmod>2022-09-12T14:30:27+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.indbit.ir/static/index8.html</loc>
+  <lastmod>2022-09-12T14:33:07+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.indbit.ir/static/index4.html</loc>
+  <lastmod>2022-09-07T18:34:04+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>

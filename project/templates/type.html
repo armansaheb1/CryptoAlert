@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript">// <![CDATA[
+      function loading(){
+          $("#loading").show();
+          $("#content").hide();       
+      }
+// ]]></script>
+</head>
+<body>
+  
+
+<div id="loading">
+  <!-- <img src="https://icon-library.com/images/loading-please-wait-icon/loading-please-wait-icon-1.jpg" alt="Girl in a jacket" width="800" height="500"> -->
+
+</div>
+<div id="content">
+<form action="/submit">
+  <label for="indicators">یک اندیکاتور انتخاب کنید:</label>
+  <select name="indicators" id="indicator">
+    <option value="bbup">اندیکاتور بولینگربند بالا</option>
+    <option value="bbdown">اندیکاتور بولینگر بند پایین</option>
+  </select>
+  <br><br>
+  <input type="submit" value="ثبت فیلتر "  href="/submit" onclick="loading()" >
+</form>
+
+
+</div>
+</body>
+</html>
+
