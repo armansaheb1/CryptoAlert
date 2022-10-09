@@ -49,9 +49,9 @@ def chats():
         user = User.query.get(item.user)
         if not (item.user in serialize):
             if item.aread == 0:
-                serialize[item.user] = {'id': item.id, 'name': user.name , 'unread': 1}
+                serialize[item.user] = {'id': item.id, 'name': user.name , 'user': item.user, 'unread': 1}
             else:
-                serialize[item.user] = {'id': item.id, 'name': user.name, 'unread': 0}
+                serialize[item.user] = {'id': item.id, 'name': user.name, 'user': item.user, 'unread': 0}
         else:
             if item.aread == 0:
                 serialize[item.user]['unread'] = serialize[item.user]['unread'] + 1

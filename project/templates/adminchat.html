@@ -62,7 +62,7 @@
         }
         async function check(){
             await
-            fetch(`/chatsupdate/${document.getElementById('ids').value}`)
+            fetch(`/admin/chatsupdate/${document.getElementById('ids').value}`)
             .then(data => data.json())
             .then(data => {
                 console.log(data)
