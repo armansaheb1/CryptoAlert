@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title></title>
+</head>
+<body>
+  <div class="column is-12" style="margin-top: 50px;float:right">
+    <div class="box">
+        <div class="table-container">
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>user</th>
+                        <th>unread</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in chats%}
+                    <tr>
+                        <td><a href="chats/{{chats[item].id}}">{{chats[item].name}}</a> </td>
+                        <td><a href="chats/{{chats[item].id}}">{{chats[item].unread}}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+
+</body>
+</html>
+{% endblock %}

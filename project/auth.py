@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
+from flask_login import login_required, current_user
 
 auth = Blueprint('auth', __name__)
 
@@ -47,10 +48,24 @@ def signup_post():
         flash('Email address already exists')
         return redirect(url_for('auth.signup'))
 
+    if not email:
+        flash('Email is required')
+        return redirect(url_for('auth.signup'))
+
     if user2: # if a user is found, we want to redirect back to signup page so user can try again
         flash('Phone number already exists')
         return redirect(url_for('auth.signup'))
+    if not phone:
+        flash('Phone number is required')
+        return redirect(url_for('auth.signup'))
 
+    if not password:
+        flash('Password is required')
+        return redirect(url_for('auth.signup'))
+
+    if not name:
+        flash('Name is required')
+        return redirect(url_for('auth.signup'))
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), phone = phone)
 
@@ -58,7 +73,7 @@ def signup_post():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('main.index'))
     
 @auth.route('/logout')
 
@@ -66,3 +81,33 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
+
+@auth.route('/profile-update', methods=['POST'])
+def profile_post():
+    email = request.form.get('email')
+    name = request.form.get('name')
+    phone = request.form.get('phone')
+    user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
+    user2 = User.query.filter_by(phone=phone).first()
+    
+    if email:
+        if (user and (current_user.email != email)): # if a user is found, we want to redirect back to signup page so user can try again
+            flash('Email address already exists')
+            return redirect(url_for('auth.signup'))
+    if phone:
+        if (user2 and (current_user.phone != phone)): # if a user is found, we want to redirect back to signup page so user can try again
+            flash('Phone number already exists')
+            return redirect(url_for('auth.signup'))
+
+    # create a new user with the form data. Hash the password so the plaintext version isn't saved.
+    user = current_user
+    if phone:
+        user.phone = phone
+    if email:
+        user.email = email
+    if name:
+        user.name = name
+    db.session.commit()
+
+    return redirect(url_for('main.index'))

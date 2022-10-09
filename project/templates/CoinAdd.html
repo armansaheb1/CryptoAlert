@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-6" style="margin-top: 300px;;float:right">
+    <h3 class="title">اضافه کردن صرافی</h3>
+    <div class="box" style="box-sizing: border-box;">
+        <form  method="POST" action="/exchange-add">
+
+           
+
+
+            <div class="field">
+                <div class="control">
+                    <input required style="text-align: center; " class="input is-large" type="text" name="name" placeholder="Exchange Name">
+                </div>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">ثبت</button>
+        </form>
+    </div>
+
+</div>
+<div class="column is-6" style="margin-top: 300px;float:right">
+  <h3 class="title">اضافه کردن کوین</h3>
+  <div class="box" style="box-sizing: border-box;">
+        <div class="field">
+            <div class="control">
+                  {% for item in exchanges %}
+                    <input type="checkbox" name="exchanges[]" value="{{item.id}}">{{item.name}}</input>
+                  {% endfor %}
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <input style="text-align: center;  " id="names" class="input is-large" type="text" name="name" placeholder="Coin Name">
+            </div>
+        </div>
+          <button type="button" onclick="submit()" class="button is-block is-info is-large is-fullwidth">ثبت</button>
+  </div>
+
+  
+</div>
+
+<div class="column is-6" style="margin-top: 50px;float:right">
+    <div class="box">
+        <div class="table-container">
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Exchanges</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in exchanges%}
+                    <tr>
+                        <td>{{item.name}}</td>
+                        <td><button onclick="ExchangeDelete({{item.id}})" class="button is-block is-danger is-small is-fullwidth">Delete</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="column is-6" style="margin-top: 50px;float:right">
+    <div class="box">
+        <div class="table-container">
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Coin</th>
+                        <th>Exchanges</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in coins%}
+                    <tr>
+                        <td>{{item.name}}</td>
+                        <td>
+                            {% for itemm in item.exchanges %}
+                            <a>
+                                {{itemm.name}} , 
+                            </a>
+                            {% endfor %}
+                        </td>
+                        <td><button onclick="CoinDelete({{item.id}})" class="button is-block is-danger is-small is-fullwidth">Delete</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function submit() {
+        var name = document.getElementById('names').value
+        var list = []
+        document.querySelectorAll('input[type=checkbox]').forEach(element => {
+            if(element.checked){
+                list.push(element.value)
+                console.log(list)
+            }
+        });
+        console.log(list)
+        await
+        
+        fetch('/coin-add' , {body: JSON.stringify({name: name, exchanges: list}), method:'POST'})
+        .then(data => {
+            window.location.href = 'add';
+        } )
+    };
+    async function CoinDelete(id) {
+        await
+        fetch('/coin-delete' , {body: JSON.stringify({id: id}), method:'POST'})
+        .then(data => {
+            window.location.href = 'add';
+        } )
+    };
+    async function ExchangeDelete(id) {
+        await
+        fetch('/exchange-delete' , {body: JSON.stringify({id: id}), method:'POST'})
+        .then(data => {
+            window.location.href = 'add';
+        } )
+    }
+</script>
+
+
+{% endblock %}

@@ -5,6 +5,14 @@ from flask_login import UserMixin
 from sqlalchemy.orm import backref
 
 
+
+coin_exchange = db.Table('coin_exchange',
+                    db.Column('coin_id', db.Integer, db.ForeignKey('coin.id')),
+                    db.Column('exchange_id', db.Integer, db.ForeignKey('exchange.id'))
+                    )
+
+
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
     email = db.Column(db.String(100), unique=True)
@@ -21,3 +29,19 @@ class Alert(db.Model):
     status = db.Column(db.Integer, default= 0)
     user = db.Column(db.Integer, default= 0)
     
+class Exchange(db.Model):
+    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    name = db.Column(db.String(100), unique=True)
+
+class Coin(db.Model):
+    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    name = db.Column(db.String(100), unique=True)
+    exchanges = db.relationship('Exchange', secondary=coin_exchange, backref='coins')
+    
+class Chat(db.Model):
+    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    user = db.Column(db.Integer, default= 0)
+    name = db.Column(db.String(100))
+    text = db.Column(db.String(1000))
+    read = db.Column(db.Integer())
+    aread = db.Column(db.Integer())

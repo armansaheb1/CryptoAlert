@@ -2,45 +2,65 @@
 
 {% block content %}
 <div class="column is-8 is-offset-2" style="margin-top: 200px;">
-    <h3 class="title">ثبت آلرت قیمت</h3>
+    <h3 class="title">ثبت آلارم قیمت</h3>
     <div class="box" style="box-sizing: border-box;">
         <form  method="POST" action="/price-alert">
 
             <div class="field">
                 <div class="control">
                   <div class="select is-fullwidth">
-                    <select style="text-align: center;" name="coin">
-                      <option disabled selected>Select Coin</option>
+                    
+                    <select onchange=" select() ;document.getElementById('coinin').value = document.getElementById('coinsel').value" id="coinsel" required style="text-align: center;" name="coin">
+                      <option disabled selected>کوین را انتخاب کنید</option>
                       {% for item in coins %}
-                      <option value="MATICUSDT">{{item}}</option>
+                      <option value="{{item.name}}">{{item.name}}</option>
                       {% endfor %}
                     </select>
+                    <input style="width: 0; height:0; padding: 0; margin-top: 0; border-color: white ; float:left ; background: white ; position:absolute ; bottom:5px; z-index: -100" required name="" id="coinin">
                   </div>
                 </div>
               </div>
               <div class="field">
                 <div class="control">
                   <div class="select is-fullwidth">
-                    <select style="text-align: center;" name="exchange">
-                      <option disabled selected>Select Exchange</option>
+                    
+                    <select onchange="document.getElementById('exin').value = document.getElementById('exsel').value " id="exsel" required style="text-align: center;" name="exchange">
+                      <option disabled selected>صرافی را انتخاب کنید</option>
                       {% for item in coins %}
-                      <option value="Kucoin">{{item}}</option>
+                        {% for itemm in item.exchanges %}
+                          <option style="display: none;" class="{{item.name}}" value="{{itemm.name}}">{{itemm.name}}</option>
+                        {% endfor %}
                       {% endfor %}
                     </select>
+                    <input style="width: 0; height:0; padding: 0; margin-top: 0; border-color: white ; float:left ; background: white ; position:absolute ; bottom:5px; z-index: -100" required name="" id="exin">
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    
+                    <select onchange="document.getElementById('pathin').value = document.getElementById('pathsel').value " id="pathsel" required style="text-align: center;" name="path">
+                      <option disabled selected>جهت را انتخاب کنید</option>
+                      <option value="1">بالا</option>
+                      <option value="0">پایین</option>
+                    </select>
+                    <input style="width: 0; height:0; padding: 0; margin-top: 0; border-color: white ; float:left ; background: white ; position:absolute ; bottom:5px; z-index: -100" required name="" id="pathin">
                   </div>
                 </div>
               </div>
 
+
             <div class="field">
                 <div class="control">
-                    <input style="text-align: center; " class="input is-large" type="number" step="0.000001" name="price" placeholder="Price">
+                    <input min="0.000001" required style="text-align: center; " class="input is-large" type="number" step="0.000001" name="price" placeholder="Price">
                 </div>
             </div>
-            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+            <button class="button is-block is-info is-large is-fullwidth">ثبت</button>
         </form>
     </div><br><br>
 
-    <h3 class="title"> آلرت های ثبت شده</h3>
+    <h3 class="title"> آلارم های ثبت شده</h3>
     <div class="box">
         <div class="table-container">
             <table class="table is-fullwidth">
@@ -51,6 +71,7 @@
                         <th>Price</th>
                         <th>Path</th>
                         <th>Status</th>
+                        <th>Operations</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +80,7 @@
                         <td>{{item.coin}}</td>
                         <td>{{item.exchange}}</td>
                         <td>{{item.price}}</td>
-                        {% if item.path == '1' %}
+                        {% if item.path == 1 %}
                         <td style="color:green">بالا</td>
                         {% else %}
                         <td style="color: red">پایین</td>
@@ -69,6 +90,7 @@
                         {% else %}
                         <td style="color: red">انجام نشده</td>
                         {% endif %}
+                        <td><button onclick="del({{item.id}})" class="button is-block is-danger is-small ">حذف</button></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -76,4 +98,20 @@
         </div>
     </div>
 </div>
+<script>
+  function select(){
+      var a = document.getElementById('coinsel').value
+      document.querySelectorAll('.' + a).forEach(element => {
+      element.style.display = 'block'
+    })
+  };
+  async function del(id) {
+        await
+        fetch('/alert-delete' , {body: JSON.stringify({id: id}), method:'POST'})
+        .then(data => {
+            window.location.reload();
+        } )
+    };
+   
+</script>
 {% endblock %}

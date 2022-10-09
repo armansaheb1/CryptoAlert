@@ -1,12 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  خوش آمدید indbit به وبسایت
-
-
+<h1 class="title nm">
+  خوش آمدید  indbit  به وبسایت
+</h1>
+<h1 class="title om">
+  به وبسایت  <br> خوش آمدید  indbit 
 </h1><br>
 <h2 class="subtitle">
   در این وب سایت ابزارهایی هوشمند جهت جستجو و یافتن ارزهای دیجیتال مورد نظر شما ارائه می شود
 </h2>
+
+<style>
+  @media screen and (max-width: 992px) {
+    .om{
+      display: block
+    }
+    .nm{
+      display: none
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .om{
+      display: none
+    }
+    .nm{
+      display: block
+    }
+  }
+</style>
 {% endblock %}

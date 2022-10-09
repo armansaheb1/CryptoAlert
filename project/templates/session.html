@@ -1,0 +1,135 @@
+{% block session %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flask Auth Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="preconnect" href="//fdn.fontcdn.ir">
+    <link rel="preconnect" href="//v1.fontapi.ir">
+</head>
+{% if current_user.is_authenticated %}
+<div style="position: fixed ; bottom : 10px; left: 10px; z-index: 1000" >
+    <div id='chatbox' class="card" style="background:lightgrey; border-radius:5px; border-style: grey 1px ;padding:10px">
+        <button style="float:right" onclick="hide()">X</button><br><br>
+    <p id="no" style='color: #444;font-size: 30px;'>No message yet..</p>
+
+        <div class="message_holder" style="min-height:250px ; max-height: 250px;overflow-y: auto;max-width: 250px;">
+        
+        </div>
+
+
+            <input id="text" name="text" class="input " type="text" placeholder="Messages"/>
+            <input id="name" value="{{current_user.name}}" hidden name="name" type="text" placeholder="Messages"/>
+            <input onclick="send()" class="button is-block is-primary is-small is-fullwidth" type="submit"/>
+
+</div>
+</div>
+<div id="chatbutton" style="position: fixed ; bottom : 10px; left: 10px;cursor: pointer; z-index: 1000">
+    <img onclick="unhide()" style="width:100px; height:100px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Circle-icons-chat.svg/1024px-Circle-icons-chat.svg.png" />
+</div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script type="text/javascript">
+        function hide(){
+            localStorage.setItem('chat' , false)
+            document.getElementById('chatbox').style.display = 'none'
+            document.getElementById('chatbutton').style.display = 'block'
+        }
+        function unhide(){
+            localStorage.setItem('chat' , true)
+            document.getElementById('chatbox').style.display = 'block'
+            document.getElementById('chatbutton').style.display = 'none'
+        }
+        function checkhide(){
+            if(localStorage.getItem('chat') === 'false' || !localStorage.getItem('chat')){
+                document.getElementById('chatbox').style.display = 'none'
+                document.getElementById('chatbutton').style.display = 'block'
+            }else{
+                document.getElementById('chatbox').style.display = 'block'
+                document.getElementById('chatbutton').style.display = 'none'
+            }
+            
+        }
+        checkhide()
+        async function send(){
+            text = document.getElementById('text').value
+            name = document.getElementById('name').value
+            await
+            fetch('/chat/send' , {body: JSON.stringify({text : text, name: name}), method:'POST'})
+            .then(data => data.json())
+            .then(data => {
+                var messages = data
+                if(messages.length){
+                    document.getElementById('no').innerHTML = ''
+                }
+                document.querySelector('.message_holder').innerHTML = ''
+                for (item of messages){
+                    if(item.name === 'ادمین'){
+                        var al = 'left'
+                        var color = 'cyan'
+                        var tcolor = '#000'
+                    }else{
+                        var al = 'right'
+                        var color = 'darkblue'
+                        var tcolor = 'white'
+                    }
+                    document.querySelector('.message_holder').innerHTML = document.querySelector('.message_holder').innerHTML + (`
+                        <div style="text-align: ${al};"><b style="color:${tcolor} ; padding: 5px ; border-radius: 5px ; background: ${color} ; margin-bottom : 15px">${item.name}</b>
+                            <br>
+                            <a style="color:#000 ; padding: 5px ; border-radius: 5px; background: white ; width:250px ; margin-bottom : 15px ; text-align: justify">
+                            ${item.text} 
+                            </a>
+                        </div><br>`
+                    )
+                }
+            })
+        }
+        async function check(){
+            await
+            fetch('/chat')
+            .then(data => data.json())
+            .then(data => {
+                console.log(data)
+                var messages = data
+                if(messages.length){
+                    document.getElementById('no').innerHTML = ''
+                }
+                document.querySelector('.message_holder').innerHTML = ''
+                for (item of messages){
+                    if(item.name === 'ادمین'){
+                        var al = 'left'
+                        var color = 'cyan'
+                        var tcolor = '#000'
+                    }else{
+                        var al = 'right'
+                        var color = 'darkblue'
+                        var tcolor = 'white'
+                    }
+                    document.querySelector('.message_holder').innerHTML = document.querySelector('.message_holder').innerHTML + (`
+                        <div style="text-align: ${al};"><b style="color:${tcolor} ; padding: 5px ; border-radius: 5px ; background: ${color} ; margin-bottom : 15px">${item.name}</b>
+                            <br>
+                            <div style="color:#000 ; padding: 5px ; border-radius: 5px; background: white ; width:250px ; margin-bottom : 15px ; text-align: justify">
+                            ${item.text} 
+                            </div>
+                        </div><br>`
+                    )
+                }
+                setTimeout(() => {
+                    check()
+                }, 15000);
+            })
+        }
+        check()
+    </script>
+
+</div>
+{% endif %}
+</html>
+{% endblock %}

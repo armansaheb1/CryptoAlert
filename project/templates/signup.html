@@ -14,29 +14,29 @@
         <form method="POST" action="/signup">
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+                    <input class="input is-large" required type="email" name="email" placeholder="ایمیل" autofocus="">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="text" name="phone" placeholder="Phone Number" autofocus="">
+                    <input class="input is-large" required type="tel" pattern="[0-9]{1}[0-9]{9}" name="phone" placeholder="شماره تلفن همراه (بدون صفر)" autofocus="">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
+                    <input class="input is-large" required type="text" name="name" placeholder="نام" autofocus="">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                    <input class="input is-large" required type="password" name="password" placeholder="کلمه عبور">
                 </div>
             </div>
 
-            <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+            <button class="button is-block is-info is-large is-fullwidth">ثبت نام</button>
         </form>
     </div>
 </div>

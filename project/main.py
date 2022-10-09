@@ -6,17 +6,34 @@ import tradingview_ta
 import pandas as pd
 import pandas_ta as pta
 import numpy as np
-
-from .models import User, Alert
+import requests
+from .models import User, Alert, Exchange, Coin, Chat
 from ta import add_all_ta_features
 import datetime
 from datetime import date
 import time
 import datetime
 import atexit
-
+from ippanel import Client
+import ast
+import sys
 from apscheduler.schedulers.background import BackgroundScheduler
 import ghasedakpack
+
+import requests
+
+
+def smss(user='' , name = '' , price = '' , pattern = 'qtmw21gxth5c248'):
+    smsss = Client("1N6X3agcf1kGBjxQeTfKfPDiiqdjekKmPBFSlavYHU8=")
+
+    bulk_id = smsss.send_pattern(
+        pattern,    # pattern code
+        "+983000505",      # originator
+        user,  # recipient
+        {"name" : name, "price": price},  # pattern values
+    )
+    return True
+
 sms = ghasedakpack.Ghasedak("a38fbde9eefdf9c7034357178b235a2565b50d41fd477252caee205662ce6dea")
 
 
@@ -44,25 +61,80 @@ def checkalert():
     for item in Alert.query.filter_by(status = 0):
         price = get_price(item.coin, item.exchange)
         if item.path == 1:
-            if item.price <= price:
-                sms.send({'message':f'آلرت {item.coin} شما به قیمت {item.price} رسیده است' , 'receptor' : str(User.query.filter_by(id = item.user).phone), 'linenumber': '30005006007564' })
-        else:
-            if item.price >= price:
-                sms.send({'message':f'آلرت {item.coin} شما به قیمت {item.price} رسیده است' , 'receptor' : str(User.query.filter_by(id = item.user).phone), 'linenumber': '30005006007564' })
-    
-    return 'hi'
+            if float(item.price) <= float(price):
+                smss(user= '+98' + User.query.get( item.user).phone , price= item.price, name = item.coin + f'({item.exchange})')
+#                sms.send({'message':f'آلارم {item.coin} شما به قیمت {float(item.price)} رسیده است' , 'receptor' : str(User.query.filter_by(id = item.user).first().phone), 'linenumber': '30005006007564' })
 
+                url = "https://api.ghasedak.me/v2/voice/send/simple"
+
+                payload = f"message={item.coin}&receptor=0{User.query.get( item.user).phone}"
+                headers = {
+                    'apikey': "a38fbde9eefdf9c7034357178b235a2565b50d41fd477252caee205662ce6dea",
+                    'content-type': "application/x-www-form-urlencoded",
+                    'cache-control': "no-cache",
+                }
+
+                response = requests.request("POST", url, data=payload, headers=headers)
+
+                print(response.text)
+                print(response)
+                user = Alert.query.get(item.id)
+                user.status = 1
+                db.session.commit()
+        else:
+            if float(item.price) >= float(price):
+                smss(user= '+98' + User.query.get( item.user).phone , price= item.price, name = item.coin)
+
+                url = "https://api.ghasedak.me/v2/voice/send/simple"
+
+                payload = f"message={item.coin}&receptor=0{User.query.get( item.user).phone}"
+                headers = {
+                    'apikey': "a38fbde9eefdf9c7034357178b235a2565b50d41fd477252caee205662ce6dea",
+                    'content-type': "application/x-www-form-urlencoded",
+                    'cache-control': "no-cache",
+                }
+
+                response = requests.request("POST", url, data=payload, headers=headers)
+
+                print(response.text)
+                print(response)
+                user = Alert.query.get(item.id)
+                user.status = 1
+                db.session.commit()
+        time.sleep(1)
+    return 'hi'
 
 @main.route('/')
 def index():
     return render_template('index.html')
 
+@main.route('/users')
+def users(): 
+    lists = []
+    for item in User.query.all():
+        lists.append([item.name, item.phone, item.email])
+    return lists
+
+@main.route('/alerts')
+def alerts(): 
+    lists = []
+    for item in Alert.query.all():
+        lists.append([item.coin, item.user, item.price, item.path , item.status])
+    return lists
+
+@main.route('/chats')
+def chatssss(): 
+    lists = []
+    for item in Chat.query.all():
+        lists.append([item.user, item.text])
+    return lists
+
 @main.route('/price-alert')
 @login_required
 def price_alert(): 
-    coins = ['a', 'b', 'c', 'd']
-    alerts = Alert.query.all()
-    return render_template('PriceAlert.html', coins = coins , alerts = alerts)
+    coins = Coin.query.all()
+    alerts = Alert.query.filter_by(user = current_user.id)
+    return render_template('PriceAlert.html', coins = coins, alerts = alerts)
 
 @main.route('/price-alert', methods=['POST'])
 @login_required
@@ -70,13 +142,7 @@ def price_alert_post():
     coin = request.form.get('coin')
     exchange = request.form.get('exchange')
     price = float(request.form.get('price'))
-    now = float(get_price(symbol=coin , exchange = exchange) )
-    if price > now :
-        path = 1
-    if price < now :
-        path = 0
-    
-        
+    path = int(request.form.get('path'))
     new_alert = Alert(user = current_user.id,coin = coin, exchange = exchange, price = price, path = path)
 
     # add the new user to the database
@@ -85,12 +151,26 @@ def price_alert_post():
     coins = ['a', 'b', 'c', 'd']
     alerts = Alert.query.all()
     return redirect(url_for('main.price_alert'))
-    return render_template('PriceAlert.html', coins = coins , alerts = alerts)
+
+@main.route('/alert-delete', methods=['POST'])
+@login_required
+def price_alert_delete():
+    dict_str = request.data.decode("UTF-8")
+    mydata = ast.literal_eval(dict_str)
+    ids = name= mydata['id']
+
+    alert = Alert.query.get(ids)
+
+    # add the new user to the database
+    db.session.delete(alert)
+    db.session.commit()
+    return redirect(url_for('main.price_alert'))
+
 
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name , phone = current_user.phone)
+    return render_template('profile.html', name=current_user.name , phone = current_user.phone , profile = current_user)
 
 
 @main.route("/macd")   
