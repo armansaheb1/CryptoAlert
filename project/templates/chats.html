@@ -20,8 +20,8 @@
                 <tbody>
                     {% for item in chats%}
                     <tr>
-                        <td><a href="chats/{{chats[item].id}}">{{chats[item].name}}</a> </td>
-                        <td><a href="chats/{{chats[item].id}}">{{chats[item].unread}}</a></td>
+                        <td><a href="chats/{{chats[item].user}}">{{chats[item].name}}</a> </td>
+                        <td><a href="chats/{{chats[item].user}}">{{chats[item].unread}}</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
